@@ -36,7 +36,7 @@ def main():
         device.set_io_configuration(IOLine.DIO11_PWM1, IOMode.PWM)
 
         device.set_pwm_duty_cycle(IOLine.DIO10_PWM0, 50)
-        device.set_pwm_duty_cycle(IOLine.DIO11_PWM1, 100)
+        device.set_pwm_duty_cycle(IOLine.DIO11_PWM1, 50)
 
         dc1 = device.get_pwm_duty_cycle(IOLine.DIO10_PWM0)
         dc2 = device.get_pwm_duty_cycle(IOLine.DIO11_PWM1)

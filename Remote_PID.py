@@ -52,7 +52,7 @@ set_pwm_duty_cycle(io_line, cycle) cycle:0~100
 from digi.xbee.devices import XBeeDevice
 from digi.xbee.devices import RemoteXBeeDevice
 from digi.xbee.devices import XBee64BitAddress
-from digi.xbee.io import IOLine, IOMode
+from digi.xbee.io import IOLine#, IOMode
 import time
 import threading
 
@@ -77,7 +77,8 @@ local_device = XBeeDevice(PORT, BAUD_RATE)
 # リモートデバイス名を定義
 #remote_device = xbee_network.discover_device(REMOTE_NODE_ID)
 
-remote_device = RemoteXBeeDevice(local_device, XBee64BitAddress.from_hex_string("0013A2004196AE62"))
+#remote_device = RemoteXBeeDevice(local_device, XBee64BitAddress.from_hex_string("0013A2004196AE62"))
+remote_device = RemoteXBeeDevice(local_device, XBee64BitAddress.from_hex_string("0013A20041767079"))
 
 def main():
 
@@ -106,23 +107,24 @@ def main():
             #sensor_2 = remote_device.get_adc_value(SENSOR_2)
 
             #pwm_1 = sensor_1 / 4 #PWM 0~100%
-            pwm_1 = 99
+            pwm_1 = 50
 
             if pwm_1 >= 100:
                 pwm_1 = 100
 
             # 出力を設定
-            remote_device.set_pwm_duty_cycle(MOTOR_PWM, pwm_1)
-            remote_device.set_dio_value(MOTOR_1, IOMode.DIGITAL_OUT_LOW) #CCW
-            remote_device.set_dio_value(MOTOR_1, IOMode.DIGITAL_OUT_HIGH)
+            #remote_device.set_pwm_duty_cycle(MOTOR_PWM, pwm_1)
+            #remote_device.set_pwm_duty_cycle(MOTOR_PWM, 50)
+            remote_device.set_dio_value(MOTOR_1, IOMode.DIGITAL_OUT_HIGH) #CCW
+            remote_device.set_dio_value(MOTOR_2, IOMode.DIGITAL_OUT_LOW)
 
             '''
             if sensor_1 >= sensor_2:
                 remote_device.set_dio_value(MOTOR_1, IOMode.DIGITAL_OUT_HIGH) #CW
-                remote_device.set_dio_value(MOTOR_1, IOMode.DIGITAL_OUT_LOW)
+                remote_device.set_dio_value(MOTOR_2, IOMode.DIGITAL_OUT_LOW)
             else:
                 remote_device.set_dio_value(MOTOR_1, IOMode.DIGITAL_OUT_LOW) #CCW
-                remote_device.set_dio_value(MOTOR_1, IOMode.DIGITAL_OUT_HIGH)
+                remote_device.set_dio_value(MOTOR_2, IOMode.DIGITAL_OUT_HIGH)
             '''
 
 
@@ -130,14 +132,14 @@ def main():
             #PWM = remote_device.get_adc_value(IOLINE_IN)
             #test = remote_device.get_dio_value(MOTOR_1)
 
-            a = [sensor_1, sensor_2, pwm_1]
-            print(a)
+            #a = [sensor_1, sensor_2, pwm_1]
+            #print(a)
             #print(sensor_1),
             #print(sensor_2),
-            #print(pwm_1)
+            print(pwm_1)
 
         '''******************************************
-        *************** 制御プログラム END ***************
+        *************** 制御プログラム END ***********
         ******************************************'''
 
     # 通信終了

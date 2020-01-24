@@ -52,7 +52,7 @@ set_pwm_duty_cycle(io_line, cycle) cycle:0~100
 from digi.xbee.devices import XBeeDevice
 from digi.xbee.devices import RemoteXBeeDevice
 from digi.xbee.devices import XBee64BitAddress
-from digi.xbee.io import IOLine#, IOMode
+from digi.xbee.io import IOLine, IOMode
 import time
 import threading
 
@@ -90,31 +90,31 @@ def main():
         # ローカルデバイスと通信開始
         local_device.open()
 
-        # ピンモード設定 PWM
-        #remote_device.set_io_configuration(MOTOR_PWM, IOMode.PWM)
-        #remote_device.set_io_configuration(MOTOR_1, IOMode.DIGITAL_OUT)
-        #remote_device.set_io_configuration(MOTOR_2, IOMode.DIGITAL_OUT)
-        #remote_device.set_io_configuration(SENSOR_1, IOMode.ADC)
-        #remote_device.set_io_configuration(SENSOR_2, IOMode.ADC)
+
 
         '''******************************************
         *************** 制御プログラム ***************
         ******************************************'''
         while True:
+            # ピンモード設定 PWM
+            remote_device.set_io_configuration(MOTOR_PWM, IOMode.PWM)
+            #remote_device.set_io_configuration(MOTOR_1, IOMode.DIGITAL_OUT)
+            #remote_device.set_io_configuration(MOTOR_2, IOMode.DIGITAL_OUT)
+            remote_device.set_io_configuration(SENSOR_1, IOMode.ADC)
+            remote_device.set_io_configuration(SENSOR_2, IOMode.ADC)
 
             # センサ値をGET
             #sensor_1 = remote_device.get_adc_value(SENSOR_1)
             #sensor_2 = remote_device.get_adc_value(SENSOR_2)
 
             #pwm_1 = sensor_1 / 4 #PWM 0~100%
-            pwm_1 = 50
+            pwm_1 = 30
 
             if pwm_1 >= 100:
                 pwm_1 = 100
 
             # 出力を設定
-            #remote_device.set_pwm_duty_cycle(MOTOR_PWM, pwm_1)
-            #remote_device.set_pwm_duty_cycle(MOTOR_PWM, 50)
+            remote_device.set_pwm_duty_cycle(MOTOR_PWM, pwm_1)
             remote_device.set_dio_value(MOTOR_1, IOMode.DIGITAL_OUT_HIGH) #CCW
             remote_device.set_dio_value(MOTOR_2, IOMode.DIGITAL_OUT_LOW)
 
